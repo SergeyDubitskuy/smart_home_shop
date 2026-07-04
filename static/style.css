@@ -31,7 +31,6 @@ body {
     padding: 0 20px;
 }
 
-/* ===== ШАПКА ===== */
 .main-header {
     background: var(--primary);
     color: white;
@@ -78,7 +77,6 @@ nav a:hover {
     margin-left: 5px;
 }
 
-/* ===== ОСНОВНОЙ КОНТЕНТ ===== */
 main {
     min-height: calc(100vh - 200px);
     padding: 40px 0;
@@ -92,7 +90,6 @@ h1, h2, h3 {
 h1 { font-size: 2.5em; }
 h2 { font-size: 2em; }
 
-/* ===== КНОПКИ ===== */
 .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -112,13 +109,11 @@ h2 { font-size: 2em; }
 .btn-secondary { background: var(--secondary); }
 .btn-secondary:hover { background: #475569; }
 
-/* ===== FLASH-СООБЩЕНИЯ ===== */
 .flash-messages { margin-bottom: 20px; }
 .flash { padding: 15px; border-radius: 6px; margin-bottom: 10px; }
 .flash.success { background: #d1fae5; color: #065f46; }
 .flash.danger { background: #fee2e2; color: #991b1b; }
 
-/* ===== HERO СЕКЦИЯ ===== */
 .hero-section {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
@@ -131,7 +126,6 @@ h2 { font-size: 2em; }
 .hero-content h1 { font-size: 3em; margin-bottom: 20px; color: white; }
 .hero-content p { font-size: 1.3em; margin-bottom: 30px; }
 
-/* ===== ПРЕИМУЩЕСТВА ===== */
 .features-section { margin-bottom: 60px; }
 .features-grid {
     display: grid;
@@ -147,7 +141,6 @@ h2 { font-size: 2em; }
 }
 .feature-icon { font-size: 3em; margin-bottom: 15px; }
 
-/* ===== КАРТОЧКИ ТОВАРОВ (КАТАЛОГ/ГЛАВНАЯ) ===== */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -265,7 +258,6 @@ h2 { font-size: 2em; }
     .product-image { height: 180px; }
 }
 
-/* ===== КАРТА ===== */
 .map-section { margin-bottom: 60px; }
 .map-container {
     display: grid;
@@ -280,7 +272,6 @@ h2 { font-size: 2em; }
 .map-info p { margin-bottom: 10px; }
 .map-frame { border-radius: 8px; overflow: hidden; }
 
-/* ===== КАТАЛОГ ===== */
 .catalog-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -321,7 +312,6 @@ h2 { font-size: 2em; }
 .checkbox-label input { width: auto; margin: 0; }
 .results-count { color: var(--text-muted); margin-bottom: 20px; }
 
-/* ===== СТРАНИЦА ТОВАРА ===== */
 .product-detail {
     background: var(--card-bg);
     padding: 30px;
@@ -381,7 +371,6 @@ h2 { font-size: 2em; }
 .review-date { color: var(--text-muted); font-size: 0.9em; }
 .review-rating { margin-bottom: 10px; }
 
-/* ===== ОФОРМЛЕНИЕ ЗАКАЗА ===== */
 .checkout-layout {
     display: grid;
     grid-template-columns: 1fr 400px;
@@ -474,7 +463,6 @@ h2 { font-size: 2em; }
     margin-top: 30px;
 }
 
-/* ===== АВТОРИЗАЦИЯ ===== */
 .auth-container { max-width: 500px; margin: 40px auto; }
 .auth-container h1 { text-align: center; margin-bottom: 30px; }
 .auth-container label { display: block; margin-bottom: 15px; }
@@ -504,7 +492,6 @@ h2 { font-size: 2em; }
 .login-prompt a { color: var(--primary); font-weight: 600; text-decoration: none; }
 .login-prompt a:hover { text-decoration: underline; }
 
-/* ===== ПОИСК ===== */
 .search-page { max-width: 1200px; margin: 0 auto; padding: 20px; }
 .search-header { text-align: center; margin-bottom: 40px; }
 .search-header h1 { font-size: 2.5em; margin-bottom: 10px; color: var(--text); }
@@ -633,7 +620,6 @@ h2 { font-size: 2em; }
     .search-filters-card { padding: 25px; }
 }
 
-/* ===== КОРЗИНА (УНИКАЛЬНЫЕ СТИЛИ) ===== */
 .basket-wrapper {
     display: grid;
     grid-template-columns: 1fr 350px;
@@ -896,53 +882,4 @@ h2 { font-size: 2em; }
         align-items: center;
     }
     .basket-sum { text-align: left; }
-}
-
-/* ===== ФУТЕР ===== */
-.main-footer {
-    background: var(--primary-dark);
-    color: white;
-    padding: 60px 0 20px;
-    margin-top: 80px;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-section h3 {
-    color: white;
-    margin-bottom: 20px;
-    font-size: 1.2em;
-}
-
-.footer-section p {
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.footer-bottom p {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-@media (max-width: 768px) {
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
-    .main-footer {
-        padding: 40px 0 20px;
-        margin-top: 40px;
-    }
 }
