@@ -5,8 +5,16 @@
 {% block content %}
 <h1>Каталог товаров</h1>
 
+<button class="filter-toggle-btn" onclick="toggleFilters()">
+    ☰ Фильтры и категории
+</button>
+
 <div class="catalog-layout">
-    <aside class="catalog-sidebar">
+    <aside class="catalog-sidebar" id="catalogSidebar">
+        <button class="filter-close-btn" onclick="toggleFilters()">
+            ✕ Закрыть фильтры
+        </button>
+        
         <div class="filter-section">
             <h3>Категории</h3>
             <ul class="category-list">
@@ -78,8 +86,9 @@
             <div class="product-card">
                 <div class="product-image">
                     <img src="{{ url_for('static', filename='images/' + product.image_url) }}" 
-                        alt="{{ product.name }}"
-                        onerror="this.src='{{ url_for('static', filename='images/placeholder.jpg') }}'">{% if product.is_popular %}
+                         alt="{{ product.name }}"
+                         onerror="this.src='{{ url_for('static', filename='images/placeholder.jpg') }}'">
+                    {% if product.is_popular %}
                     <span class="product-badge">Популярное</span>
                     {% endif %}
                 </div>
@@ -116,4 +125,13 @@
         {% endif %}
     </div>
 </div>
+
+<script>
+function toggleFilters() {
+    const sidebar = document.getElementById('catalogSidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('active');
+    }
+}
+</script>
 {% endblock %}

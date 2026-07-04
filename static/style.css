@@ -322,6 +322,50 @@ h2 { font-size: 2em; }
 .checkbox-label input { width: auto; margin: 0; }
 .results-count { color: var(--text-muted); margin-bottom: 20px; }
 
+/* Кнопки фильтров для мобильной версии */
+.filter-toggle-btn {
+    display: none;
+}
+
+.filter-close-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .filter-toggle-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    
+    .filter-toggle-btn:hover {
+        background: var(--primary-dark);
+    }
+    
+    .filter-close-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: var(--secondary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+}
+
 /* ===== СТРАНИЦА ТОВАРА ===== */
 .product-detail {
     background: var(--card-bg);
