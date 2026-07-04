@@ -2,13 +2,20 @@ from flask import Flask, render_template, request, redirect, url_for, session, g
 from db import get_pg, get_mongo, close_db, get_avg_rating, format_rating, init_db, create_order, get_order_by_number, get_order_items, create_user, get_user_by_username, get_user_by_email, verify_user, get_user_by_id
 from functools import wraps
 import json
+import os
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'smart_home_secret_key_2026'
+
+app.secret_key = os.environ.get('SECRET_KEY', 'smart_home_secret_key_2026')
 app.jinja_env.filters['format_rating'] = format_rating
-app.config['PG_DSN'] = "dbname=smart_home_db user=postgres password=123123 host=localhost"
-app.config['MONGO_URI'] = "mongodb://localhost:27017/"
+
+database_url = os.environ.get('DATABASE_URL', "dbname=smart_home_db user=postgres password=123123 host=localhost")
+if database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+app.config['PG_DSN'] = database_url
+
+app.config['MONGO_URI'] = os.environ.get('MONGODB_URI', "mongodb://localhost:27017/")
 
 def login_required(f):
     @wraps(f)
@@ -209,7 +216,6 @@ def search():
     cursor.execute("SELECT * FROM categories ORDER BY name")
     categories = cursor.fetchall()
     
-    # Поиск только при вводе минимум 2 символов
     if not query or len(query) < 2:
         return render_template('search.html', 
                              results=[], 
@@ -494,6 +500,9 @@ def init_database():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    print("Запуск приложения: http://127.0.0.1:5000")
-    print("Для инициализации БД перейдите: http://127.0.0.1:5000/init_db")
-    app.run(debug=True, port=5000)
+    is_debug = os.environ.get('FLASK_DEBUG', '0') == '1'
+    port = int(os.environ.get('PORT', 5000))
+    
+    print(f"Запуск приложения: http://127.0.0.1:{port}")
+    print("Для инициализации БД перейдите: http://127.0.0.1:{port}/init_db")
+    app.run(debug=is_debug, host='0.0.0.0', port=port)
