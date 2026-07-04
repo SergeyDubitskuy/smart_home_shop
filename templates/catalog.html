@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Каталог - SmartHome Market{% endblock %}
+
+{% block content %}
+<h1>Каталог товаров</h1>
+
+<div class="catalog-layout">
+    <aside class="catalog-sidebar">
+        <div class="filter-section">
+            <h3>Категории</h3>
+            <ul class="category-list">
+                <li>
+                    <a href="{{ url_for('catalog') }}" class="{% if not selected_category %}active{% endif %}">
+                        Все категории
+                    </a>
+                </li>
+                {% for category in categories %}
+                <li>
+                    <a href="{{ url_for('catalog', category_id=category.id) }}" 
+                        class="{% if selected_category and selected_category == category.id|string %}active{% endif %}">
+                            {{ category.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="filter-section">
+            <h3>Фильтры</h3>
+            <form method="get" class="filter-form">
+                {% if selected_category %}
+                <input type="hidden" name="category" value="{{ selected_category }}">
+                {% endif %}
+                
+                <label>
+                    Цена от:
+                    <input type="number" name="price_min" value="{{ filters.get('price_min', '') }}" min="0" placeholder="0">
+                </label>
+                
+                <label>
+                    Цена до:
+                    <input type="number" name="price_max" value="{{ filters.get('price_max', '') }}" min="0" placeholder="100000">
+                </label>
+                
+                <label>
+                    Минимальный рейтинг:
+                    <input type="number" name="rating" value="{{ filters.get('rating', '') }}" min="0" max="5" step="0.1" placeholder="0">
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" name="in_stock" value="1" {% if filters.get('in_stock') %}checked{% endif %}>
+                    Только в наличии
+                </label>
+                
+                <label>
+                    Сортировка:
+                    <select name="sort">
+                        <option value="name" {% if filters.get('sort') == 'name' %}selected{% endif %}>По названию</option>
+                        <option value="price_asc" {% if filters.get('sort') == 'price_asc' %}selected{% endif %}>Цена: по возрастанию</option>
+                        <option value="price_desc" {% if filters.get('sort') == 'price_desc' %}selected{% endif %}>Цена: по убыванию</option>
+                        <option value="rating" {% if filters.get('sort') == 'rating' %}selected{% endif %}>По рейтингу</option>
+                        <option value="newest" {% if filters.get('sort') == 'newest' %}selected{% endif %}>Сначала новые</option>
+                    </select>
+                </label>
+                
+                <button type="submit" class="btn">Применить</button>
+                <a href="{{ url_for('catalog', category_id=selected_category) if selected_category else url_for('catalog') }}" class="btn btn-secondary">Сбросить</a>
+            </form>
+        </div>
+    </aside>
+
+    <div class="catalog-main">
+        {% if products %}
+        <p class="results-count">Найдено товаров: {{ products|length }}</p>
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="{{ url_for('static', filename='images/' + product.image_url) }}" 
+                        alt="{{ product.name }}"
+                        onerror="this.src='{{ url_for('static', filename='images/placeholder.jpg') }}'">{% if product.is_popular %}
+                    <span class="product-badge">Популярное</span>
+                    {% endif %}
+                </div>
+                <div class="product-info">
+                    <span class="product-category">{{ product.category_name }}</span>
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description[:80] }}{% if product.description|length > 80 %}...{% endif %}</p>
+                    <div class="product-meta">
+                        <span class="product-stock">
+                            {% if product.stock > 0 %}
+                            В наличии: {{ product.stock }} шт.
+                            {% else %}
+                            Нет в наличии
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
+                        <div class="product-actions">
+                            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn">Подробнее</a>
+                            {% if product.stock > 0 %}
+                            <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-cart">В корзину</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>Товары не найдены. Попробуйте изменить параметры фильтра.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

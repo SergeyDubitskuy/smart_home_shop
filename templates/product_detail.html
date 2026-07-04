@@ -1,0 +1,161 @@
+<!-- templates/product_detail.html -->
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - SmartHome Market{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="product-main">
+        <div class="product-gallery">
+            <img src="{{ url_for('static', filename='images/' + product.image_url) }}" 
+                alt="{{ product.name }}"
+                onerror="this.src='{{ url_for('static', filename='images/placeholder.jpg') }}'">
+            </div>
+        
+        <div class="product-info-detail">
+            <span class="product-category">{{ product.category_name }}</span>
+            <h1>{{ product.name }}</h1>
+            
+            <div class="product-rating">
+                <span class="stars">⭐ {{ get_avg_rating(product.id)|format_rating }}</span>
+                <span class="reviews-count">({{ reviews|length }} отзывов)</span>
+            </div>
+            
+            <div class="product-price-large">
+                {{ "%.0f"|format(product.price) }} ₽
+            </div>
+            
+            <div class="product-stock-info">
+                {% if product.stock > 0 %}
+                <span class="in-stock">В наличии: {{ product.stock }} шт.</span>
+                {% else %}
+                <span class="out-of-stock">Нет в наличии</span>
+                {% endif %}
+            </div>
+            
+            <div class="product-description">
+                <h3>Описание</h3>
+                <p>{{ product.description }}</p>
+            </div>
+            
+            {% if product.stock > 0 %}
+            <div class="product-actions-detail">
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-large">Добавить в корзину</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if analogs %}
+    <div class="analogs-section">
+        <h2>Аналоги</h2>
+        <div class="analogs-grid">
+            {% for analog in analogs %}
+            <div class="analog-card">
+                <h4>{{ analog.name }}</h4>
+                <p>{{ analog.features }}</p>
+                <div class="analog-price">{{ "%.0f"|format(analog.price) }} ₽</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if related_products %}
+    <div class="related-section">
+        <h2>Похожие товары</h2>
+        <div class="products-grid">
+            {% for product in related_products %}
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                </div>
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <div class="product-footer">
+                        <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
+                        <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="reviews-section">
+        <h2>Отзывы ({{ reviews|length }})</h2>
+        
+        {% if reviews %}
+        <div class="reviews-list">
+            {% for review in reviews %}
+            <div class="review-card">
+                <div class="review-header">
+                    <strong>{{ review.author }}</strong>
+                    <span class="review-date">{{ review.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
+                </div>
+                <div class="review-rating">⭐ {{ review.rating }}/5</div>
+                <div class="review-text">{{ review.text }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-reviews">Отзывов пока нет. Будьте первым!</p>
+        {% endif %}
+        
+        <div class="review-form">
+            {% if current_user %}
+                <h3>Оставить отзыв</h3>
+                <form method="post">
+                    <label>
+                        Оценка:
+                        <select name="rating" required>
+                            <option value="5">5 звёзд</option>
+                            <option value="4">4 звезды</option>
+                            <option value="3">3 звезды</option>
+                            <option value="2">2 звезды</option>
+                            <option value="1">1 звезда</option>
+                        </select>
+                    </label>
+                    <label>
+                        Текст отзыва:
+                        <textarea name="text" rows="4" required placeholder="Поделитесь своим опытом..."></textarea>
+                    </label>
+                    <button type="submit" class="btn">Отправить отзыв</button>
+                </form>
+            {% else %}
+                <div class="login-prompt">
+                    <h3>Оставить отзыв</h3>
+                    <p>Чтобы оставить отзыв, необходимо <a href="{{ url_for('login', next=request.url) }}">войти в систему</a> или <a href="{{ url_for('register') }}">зарегистрироваться</a>.</p>
+                </div>
+            {% endif %}
+        </div>            
+        <h3>Оставить отзыв</h3>
+            <form method="post">
+                <label>
+                    Ваше имя:
+                    <input type="text" name="author" placeholder="Аноним">
+                </label>
+                
+                <label>
+                    Оценка:
+                    <select name="rating" required>
+                        <option value="5">5 звёзд</option>
+                        <option value="4">4 звезды</option>
+                        <option value="3">3 звезды</option>
+                        <option value="2">2 звезды</option>
+                        <option value="1">1 звезда</option>
+                    </select>
+                </label>
+                
+                <label>
+                    Текст отзыва:
+                    <textarea name="text" rows="4" required placeholder="Поделитесь своим опытом..."></textarea>
+                </label>
+                
+                <button type="submit" class="btn">Отправить отзыв</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

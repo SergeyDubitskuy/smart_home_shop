@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Оформление заказа - SmartHome Market{% endblock %}
+{% block content %}
+<h1>Оформление заказа</h1>
+<div class="checkout-layout">
+    <div class="checkout-form">
+        <div class="card">
+            <h2>Контактные данные</h2>
+            <form method="post">
+                <label>
+                    ФИО <span style="color: var(--danger);">*</span>
+                    <input type="text" name="customer_name" required value="{{ request.form.get('customer_name', '') }}">
+                </label>
+                <label>
+                    Телефон <span style="color: var(--danger);">*</span>
+                    <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__" value="{{ request.form.get('phone', '') }}">
+                </label>
+                <label>
+                    Email
+                    <input type="email" name="email" placeholder="example@mail.ru" value="{{ request.form.get('email', '') }}">
+                </label>
+                <label>
+                    Адрес доставки <span style="color: var(--danger);">*</span>
+                    <textarea name="address" rows="3" required placeholder="Город, улица, дом, квартира">{{ request.form.get('address', '') }}</textarea>
+                </label>
+                <label>
+                    Комментарий к заказу
+                    <textarea name="comment" rows="2" placeholder="Дополнительная информация">{{ request.form.get('comment', '') }}</textarea>
+                </label>
+                <button type="submit" class="btn btn-large">Подтвердить заказ</button>
+            </form>
+        </div>
+    </div>
+    <div class="checkout-summary">
+        <div class="card">
+            <h2>Ваш заказ</h2>
+            {% for item in items %}
+            <div class="checkout-item">
+                <div class="checkout-item-info">
+                    <strong>{{ item.product.name }}</strong>
+                    <small>{{ item.qty }} шт. × {{ "%.0f"|format(item.product.price) }} ₽</small>
+                </div>
+                <div class="checkout-item-price">{{ "%.0f"|format(item.subtotal) }} ₽</div>
+            </div>
+            {% endfor %}
+            <div class="checkout-total">
+                <span>Итого:</span>
+                <strong>{{ "%.0f"|format(total) }} ₽</strong>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

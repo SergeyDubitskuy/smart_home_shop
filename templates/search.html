@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Поиск - SmartHome Market{% endblock %}
+
+{% block content %}
+<div class="search-page">
+    <div class="search-header">
+        <h1>Поиск товаров</h1>
+        <p class="search-subtitle">Найдите идеальное устройство для умного дома</p>
+    </div>
+
+    <div class="search-container">
+        <div class="search-filters-card">
+            <form method="get" class="search-form">
+                <div class="search-input-wrapper">
+                    <label for="search-query" class="search-label">Название товара</label>
+                    <div class="search-input-group">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        <input type="text" 
+                               id="search-query"
+                               name="q" 
+                               value="{{ query }}" 
+                               placeholder="Введите название..." 
+                               autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="filter-section">
+                        <label class="filter-label">Категория</label>
+                        <select name="category" class="filter-select">
+                            <option value="">Все категории</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}" {% if filters.get('category') == category.id|string %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label class="filter-label">Цена, ₽</label>
+                        <div class="price-inputs">
+                            <div class="price-input-group">
+                                <label for="price-min">От</label>
+                                <input type="number" 
+                                       id="price-min"
+                                       name="price_min" 
+                                       value="{{ filters.get('price_min', '') }}" 
+                                       min="0" 
+                                       placeholder="0"
+                                       class="price-input">
+                            </div>
+                            <div class="price-input-group">
+                                <label for="price-max">До</label>
+                                <input type="number" 
+                                       id="price-max"
+                                       name="price_max" 
+                                       value="{{ filters.get('price_max', '') }}" 
+                                       min="0" 
+                                       placeholder="100000"
+                                       class="price-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-actions">
+                    <button type="submit" class="btn btn-primary btn-search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        Найти
+                    </button>
+                    <a href="{{ url_for('search') }}" class="btn btn-secondary">Сбросить</a>
+                </div>
+            </form>
+        </div>
+
+        {% if query and query|length >= 2 %}
+        <div class="search-results">
+            <div class="results-header">
+                <h2>Результаты поиска: "{{ query }}"</h2>
+                {% if results %}
+                <span class="results-count">Найдено: {{ results|length }}</span>
+                {% endif %}
+            </div>
+
+            {% if results %}
+            <div class="products-grid">
+                {% for product in results %}
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ url_for('static', filename='images/' + product.image_url) }}" 
+                            alt="{{ product.name }}"
+                            onerror="this.src='{{ url_for('static', filename='images/placeholder.jpg') }}'">
+                        {% if product.is_popular %}
+                        <span class="product-badge">Популярное</span>
+                        {% endif %}
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">{{ product.category_name }}</span>
+                        <h3>{{ product.name }}</h3>
+                        <p class="product-description">{{ product.description[:80] }}{% if product.description|length > 80 %}...{% endif %}</p>
+                        <div class="product-meta">
+                            <span class="product-stock">
+                                {% if product.stock > 0 %}
+                                В наличии: {{ product.stock }} шт.
+                                {% else %}
+                                Нет в наличии
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
+                            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                    <path d="M8 11h6"></path>
+                </svg>
+                <h3>Ничего не найдено</h3>
+                <p>По вашему запросу не найдено ни одного товара. Попробуйте изменить параметры поиска.</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Вход - SmartHome Market{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <div class="card">
+        <h1>Вход в систему</h1>
+        <form method="post">
+            <label>
+                Имя пользователя
+                <input type="text" name="username" required placeholder="Введите имя пользователя">
+            </label>
+            <label>
+                Пароль
+                <input type="password" name="password" required placeholder="Введите пароль">
+            </label>
+            <button type="submit" class="btn btn-large">Войти</button>
+        </form>
+        <p class="auth-link">Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a></p>
+    </div>
+</div>
+{% endblock %}

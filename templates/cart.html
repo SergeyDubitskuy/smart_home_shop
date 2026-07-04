@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Корзина - SmartHome Market{% endblock %}
+
+{% block content %}
+<h1>Корзина</h1>
+
+{% if items %}
+<div class="basket-wrapper">
+    <div class="basket-list">
+        {% for item in items %}
+        <div class="basket-row">
+            <div class="basket-pic">
+                <img src="{{ url_for('static', filename='images/' + item.product.image_url) }}" 
+                     alt="{{ item.product.name }}">
+            </div>
+            <div class="basket-info">
+                <span class="basket-cat">{{ item.product.category_name }}</span>
+                <h3>{{ item.product.name }}</h3>
+                <p>{{ item.product.description[:100] }}{% if item.product.description|length > 100 %}...{% endif %}</p>
+                <div class="basket-price">{{ "%.0f"|format(item.product.price) }} ₽ / шт.</div>
+            </div>
+            <div class="basket-side">
+                <form method="post" action="{{ url_for('update_cart', product_id=item.product.id) }}" class="basket-qty">
+                    <button type="submit" name="qty" value="{{ item.qty - 1 }}" class="qty-btn">−</button>
+                    <input type="number" name="qty" value="{{ item.qty }}" min="1" class="qty-val" onchange="this.form.submit()">
+                    <button type="submit" name="qty" value="{{ item.qty + 1 }}" class="qty-btn">+</button>
+                </form>
+                <div class="basket-sum">
+                    <span>Сумма:</span>
+                    <strong>{{ "%.0f"|format(item.subtotal) }} ₽</strong>
+                </div>
+                <a href="{{ url_for('remove_from_cart', product_id=item.product.id) }}" class="basket-del">Удалить</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="basket-panel">
+        <div class="basket-total-card">
+            <h2>Ваш заказ</h2>
+            <div class="basket-total-row">
+                <span>Товаров:</span>
+                <span>{{ items|length }} шт.</span>
+            </div>
+            <div class="basket-total-row">
+                <span>Всего единиц:</span>
+                <span>{{ items|sum(attribute='qty') }} шт.</span>
+            </div>
+            <div class="basket-grand-total">
+                <span>Итого:</span>
+                <span>{{ "%.0f"|format(total) }} ₽</span>
+            </div>
+            <a href="{{ url_for('checkout') }}" class="basket-btn-order">Оформить заказ</a>
+            <a href="{{ url_for('catalog') }}" class="basket-btn-back">Продолжить покупки</a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="basket-empty">
+    <h2>Корзина пуста</h2>
+    <p>Добавьте товары из каталога, чтобы оформить заказ</p>
+    <a href="{{ url_for('catalog') }}" class="btn btn-large">Перейти в каталог</a>
+</div>
+{% endif %}
+{% endblock %}

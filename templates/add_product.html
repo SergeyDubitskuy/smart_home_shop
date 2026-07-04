@@ -1,0 +1,48 @@
+<!-- templates/add_product.html -->
+{% extends "base.html" %}
+
+{% block title %}Добавить товар - SmartHome Market{% endblock %}
+
+{% block content %}
+<h1>Добавить новый товар</h1>
+
+<div class="form-container">
+    <form method="post" class="product-form">
+        <label>
+            Название товара:
+            <input type="text" name="name" required>
+        </label>
+        
+        <label>
+            Категория:
+            <select name="category_id" required>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        
+        <label>
+            Описание:
+            <textarea name="description" rows="4" required></textarea>
+        </label>
+        
+        <label>
+            Цена (₽):
+            <input type="number" name="price" min="0" step="0.01" required>
+        </label>
+        
+        <label>
+            Остаток на складе (шт.):
+            <input type="number" name="stock" min="0" value="10" required>
+        </label>
+        
+        <label class="checkbox-label">
+            <input type="checkbox" name="is_popular">
+            Популярный товар
+        </label>
+        
+        <button type="submit" class="btn btn-large">Добавить товар</button>
+    </form>
+</div>
+{% endblock %}

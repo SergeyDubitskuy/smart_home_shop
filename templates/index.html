@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - SmartHome Market{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>Умный дом для комфортной жизни</h1>
+        <p>Автоматизируйте свой дом с помощью современных технологий</p>
+        <a href="{{ url_for('catalog') }}" class="btn btn-large">Перейти в каталог</a>
+    </div>
+</div>
+
+<section class="features-section">
+    <h2>Почему выбирают нас</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3>Качественные товары</h3>
+            <p>Только проверенные бренды и оригинальная продукция с гарантией</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Быстрая доставка</h3>
+            <p>Доставка по Новосибирску в день заказа, по России за 2-5 дней</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔧</div>
+            <h3>Профессиональная установка</h3>
+            <p>Наши специалисты установят и настроят любое оборудование</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Поддержка 24/7</h3>
+            <p>Консультации и техническая поддержка в любое время</p>
+        </div>
+    </div>
+</section>
+
+<section class="popular-section">
+    <h2>Популярные товары</h2>
+    <div class="products-grid">
+        {% for product in popular_products %}
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/' + product.image_url) }}" 
+                     alt="{{ product.name }}"
+                     onerror="this.src='{{ url_for('static', filename='images/placeholder.jpg') }}'">
+                {% if product.is_popular %}
+                <span class="product-badge">Популярное</span>
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <span class="product-category">{{ product.category_name }}</span>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description[:80] }}{% if product.description|length > 80 %}...{% endif %}</p>
+                <div class="product-footer">
+                    <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
+                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="new-products-section">
+    <h2>Новинки</h2>
+    <div class="products-grid">
+        {% for product in new_products %}
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/' + product.image_url) }}" 
+                     alt="{{ product.name }}"
+                     onerror="this.src='{{ url_for('static', filename='images/placeholder.jpg') }}'">
+            </div>
+            <div class="product-info">
+                <span class="product-category">{{ product.category_name }}</span>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description[:80] }}{% if product.description|length > 80 %}...{% endif %}</p>
+                <div class="product-footer">
+                    <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
+                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="map-section">
+    <h2>Наш магазин</h2>
+    <div class="map-container">
+        <div class="map-info">
+            <h3>SmartHome Market</h3>
+            <p><strong>Адрес:</strong> г. Новосибирск, ул. Военная, 5, ТРЦ Аура</p>
+            <p><strong>Телефон:</strong> +7 (383) 555-35-75</p>
+            <p><strong>Email:</strong> info@smarthome-market.ru</p>
+            <p><strong>Режим работы:</strong></p>
+            <p>Пн-Пт: 10:00 - 22:00</p>
+            <p>Сб-Вс: 10:00 - 22:00</p>
+            <a href="https://yandex.ru/maps/-/CDaZjB" target="_blank" class="btn">Построить маршрут</a>
+        </div>
+        <div class="map-frame">
+            <iframe src="https://yandex.ru/map-widget/v1/?ll=82.898954%2C54.988477&z=16&pt=82.898954,54.988477,pm2rdm" 
+                    width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</section>
+{% endblock %}

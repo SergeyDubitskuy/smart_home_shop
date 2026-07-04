@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Заказ оформлен - SmartHome Market{% endblock %}
+{% block content %}
+<div class="confirmation-container">
+    <div class="confirmation-icon">✓</div>
+    <h1>Заказ успешно оформлен!</h1>
+    <p class="confirmation-message">Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время для подтверждения.</p>
+    <div class="card">
+        <h2>Номер заказа: <span class="order-number">{{ order.order_number }}</span></h2>
+        <div class="order-details">
+            <div class="order-detail-row">
+                <span>Дата оформления:</span>
+                <strong>{{ order.created_at.strftime('%d.%m.%Y в %H:%M') }}</strong>
+            </div>
+            <div class="order-detail-row">
+                <span>Получатель:</span>
+                <strong>{{ order.customer_name }}</strong>
+            </div>
+            <div class="order-detail-row">
+                <span>Телефон:</span>
+                <strong>{{ order.phone }}</strong>
+            </div>
+            {% if order.email %}
+            <div class="order-detail-row">
+                <span>Email:</span>
+                <strong>{{ order.email }}</strong>
+            </div>
+            {% endif %}
+            <div class="order-detail-row">
+                <span>Адрес доставки:</span>
+                <strong>{{ order.address }}</strong>
+            </div>
+            {% if order.comment %}
+            <div class="order-detail-row">
+                <span>Комментарий:</span>
+                <strong>{{ order.comment }}</strong>
+            </div>
+            {% endif %}
+        </div>
+        <h3 style="margin-top: 20px;">Состав заказа</h3>
+        <div class="order-items">
+            {% for item in order_items %}
+            <div class="order-item">
+                <img src="{{ url_for('static', filename='images/' + item.image_url) }}" 
+                    alt="{{ item.name }}"
+                    onerror="this.src='{{ url_for('static', filename='images/placeholder.jpg') }}'">
+                <div class="order-item-info">
+                    <strong>{{ item.name }}</strong>
+                    <small>{{ item.category_name }}</small>
+                    <span>{{ item.quantity }} шт. × {{ "%.0f"|format(item.price) }} ₽</span>
+                </div>
+                <div class="order-item-price">{{ "%.0f"|format(item.quantity * item.price) }} ₽</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="order-total">
+            <span>Итого:</span>
+            <strong>{{ "%.0f"|format(order.total) }} ₽</strong>
+        </div>
+    </div>
+    <div class="confirmation-actions">
+        <a href="{{ url_for('index') }}" class="btn btn-large">Вернуться на главную</a>
+        <a href="{{ url_for('catalog') }}" class="btn btn-large btn-secondary">Продолжить покупки</a>
+    </div>
+</div>
+{% endblock %}

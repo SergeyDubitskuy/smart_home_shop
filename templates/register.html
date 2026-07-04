@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Регистрация - SmartHome Market{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <div class="card">
+        <h1>Регистрация</h1>
+        <form method="post">
+            <label>
+                Имя пользователя <span style="color: var(--danger);">*</span>
+                <input type="text" name="username" required minlength="3" placeholder="Введите имя пользователя">
+            </label>
+            <label>
+                Email <span style="color: var(--danger);">*</span>
+                <input type="email" name="email" required placeholder="example@mail.ru">
+            </label>
+            <label>
+                Пароль <span style="color: var(--danger);">*</span>
+                <input type="password" name="password" required minlength="6" placeholder="Минимум 6 символов">
+            </label>
+            <label>
+                Подтвердите пароль <span style="color: var(--danger);">*</span>
+                <input type="password" name="password_confirm" required placeholder="Повторите пароль">
+            </label>
+            <button type="submit" class="btn btn-large">Зарегистрироваться</button>
+        </form>
+        <p class="auth-link">Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a></p>
+    </div>
+</div>
+{% endblock %}
