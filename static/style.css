@@ -1304,7 +1304,7 @@ h2 { font-size: 2em; }
 /* ===== СИЛЬНОЕ УМЕНЬШЕНИЕ ПОИСКА ===== */
 @media (max-width: 768px) {
     .search-filters-card {
-        padding: 7px;
+        padding: 5px;
     }
     
     .search-form {
@@ -1312,7 +1312,7 @@ h2 { font-size: 2em; }
     }
     
     .search-input-group input {
-        padding: 4px 7px 4px 32px;
+        padding: 4px 7px 4px 30px;
         font-size: 0.82em;
     }
     
@@ -1327,29 +1327,29 @@ h2 { font-size: 2em; }
     }
     
     .btn-search {
-        padding: 6px 12px;
+        padding: 6px 10px;
         font-size: 0.86em;
     }
 }
 
 @media (max-width: 480px) {
     .search-input-group input {
-        padding: 3px 5px 3px 29px;
+        padding: 2px 5px 2px 27px;
         font-size: 0.76em;
     }
     
     .price-input {
-        padding: 3px 4px;
+        padding: 2px 4px;
         font-size: 0.72em;
     }
     
     .filter-select {
-        padding: 3px 5px;
+        padding: 2px 5px;
         font-size: 0.76em;
     }
     
     .btn-search {
-        padding: 5px 9px;
+        padding: 4px 9px;
         font-size: 0.82em;
     }
 }
