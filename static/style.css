@@ -1304,37 +1304,37 @@ h2 { font-size: 2em; }
 /* ===== СИЛЬНОЕ УМЕНЬШЕНИЕ ПОИСКА ===== */
 @media (max-width: 768px) {
     .search-filters-card {
-        padding: 5px;
+        padding: 3px;
     }
     
     .search-form {
-        gap: 3px;
+        gap: 2px;
     }
     
     .search-input-group input {
-        padding: 4px 7px 4px 30px;
+        padding: 3px 5px 3px 27px;
         font-size: 0.82em;
     }
     
     .price-input {
-        padding: 4px 5px;
+        padding: 3px 4px;
         font-size: 0.77em;
     }
     
     .filter-select {
-        padding: 4px 7px;
+        padding: 3px 5px;
         font-size: 0.82em;
     }
     
     .btn-search {
-        padding: 6px 10px;
+        padding: 4px 9px;
         font-size: 0.86em;
     }
 }
 
 @media (max-width: 480px) {
     .search-input-group input {
-        padding: 2px 5px 2px 27px;
+        padding: 2px 4px 2px 25px;
         font-size: 0.76em;
     }
     
@@ -1344,12 +1344,12 @@ h2 { font-size: 2em; }
     }
     
     .filter-select {
-        padding: 2px 5px;
+        padding: 2px 4px;
         font-size: 0.76em;
     }
     
     .btn-search {
-        padding: 4px 9px;
+        padding: 3px 7px;
         font-size: 0.82em;
     }
 }
