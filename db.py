@@ -1,5 +1,5 @@
-import psycopg2
-import psycopg2.extras
+import psycopg
+from psycopg.rows import dict_row
 import pymongo
 from flask import g, current_app
 from datetime import datetime, timedelta
@@ -8,8 +8,8 @@ import json
 import random
 def get_pg():
     if 'pg' not in g:
-        g.pg = psycopg2.connect(current_app.config['PG_DSN'])
-        g.pg_cursor = g.pg.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        g.pg = psycopg.connect(current_app.config['PG_DSN'], row_factory=dict_row)
+        g.pg_cursor = g.pg.cursor()
     return g.pg, g.pg_cursor
 def get_mongo():
     if 'mongo_client' not in g:
@@ -465,7 +465,7 @@ def create_user(username, email, password):
         """, (username, email, password_hash))
         pg.commit()
         return cursor.fetchone()['id']
-    except psycopg2.IntegrityError:
+    except psycopg.IntegrityError:
         pg.rollback()
         return None
 def get_user_by_username(username):
