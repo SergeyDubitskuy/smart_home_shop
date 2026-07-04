@@ -1164,3 +1164,139 @@ h2 { font-size: 2em; }
         padding: 5px 2px;
     }
 }
+
+/* ===== ОЧЕНЬ КОМПАКТНЫЙ ПОИСК ДЛЯ МОБИЛЬНЫХ ===== */
+@media (max-width: 768px) {
+    .search-page {
+        padding: 10px;
+    }
+    
+    .search-filters-card {
+        padding: 12px;
+        border-radius: 10px;
+    }
+    
+    .search-form {
+        gap: 8px;
+    }
+    
+    .search-input-wrapper {
+        gap: 4px;
+    }
+    
+    .search-label {
+        font-size: 0.75em;
+        margin-bottom: 2px;
+    }
+    
+    .search-input-group input {
+        padding: 8px 10px 8px 35px;
+        font-size: 0.85em;
+        border-radius: 6px;
+        border-width: 1px;
+    }
+    
+    .search-icon {
+        left: 10px;
+        font-size: 0.8em;
+    }
+    
+    .filter-row {
+        gap: 8px;
+    }
+    
+    .price-inputs {
+        gap: 6px;
+    }
+    
+    .price-input-group label {
+        font-size: 0.75em;
+    }
+    
+    .price-input {
+        padding: 6px 8px;
+        font-size: 0.8em;
+        border-radius: 6px;
+        border-width: 1px;
+    }
+    
+    .filter-select {
+        padding: 8px 10px;
+        font-size: 0.85em;
+        border-radius: 6px;
+        border-width: 1px;
+    }
+    
+    .search-actions {
+        gap: 6px;
+        margin-top: 8px;
+    }
+    
+    .btn-search {
+        padding: 8px 15px;
+        font-size: 0.9em;
+        border-radius: 6px;
+    }
+    
+    .search-header {
+        margin-bottom: 20px;
+    }
+    
+    .search-header h1 {
+        font-size: 1.4em;
+        margin-bottom: 5px;
+    }
+    
+    .search-subtitle {
+        font-size: 0.9em;
+    }
+    
+    .results-header h2 {
+        font-size: 1.3em;
+    }
+    
+    .results-count {
+        padding: 5px 12px;
+        font-size: 0.8em;
+    }
+}
+
+/* Ещё компактнее для очень маленьких экранов */
+@media (max-width: 480px) {
+    .search-page {
+        padding: 8px;
+    }
+    
+    .search-filters-card {
+        padding: 10px;
+    }
+    
+    .search-input-group input {
+        padding: 7px 8px 7px 32px;
+        font-size: 0.8em;
+    }
+    
+    .search-icon {
+        left: 8px;
+        font-size: 0.75em;
+    }
+    
+    .price-input {
+        padding: 5px 6px;
+        font-size: 0.75em;
+    }
+    
+    .filter-select {
+        padding: 7px 8px;
+        font-size: 0.8em;
+    }
+    
+    .btn-search {
+        padding: 7px 12px;
+        font-size: 0.85em;
+    }
+    
+    .search-header h1 {
+        font-size: 1.2em;
+    }
+}
