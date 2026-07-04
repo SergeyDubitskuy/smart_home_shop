@@ -1,4 +1,3 @@
-<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}SmartHome Market{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css?v=3') }}">
+    <style>
+        body { background: #f8fafc !important; }
+        .main-header { background: #1a5f3f !important; color: white !important; }
+        .btn { background: #1a5f3f !important; color: white !important; }
+</style>
 </head>
 <body>
     <header class="main-header">
