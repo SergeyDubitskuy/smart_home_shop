@@ -392,6 +392,8 @@ def order_confirmation(order_number):
     order_items = get_order_items(order['id'])
     return render_template('order_confirmation.html', order=order, order_items=order_items)
 
+import re
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if 'user_id' in session:
@@ -407,17 +409,67 @@ def register():
             flash('Заполните все поля', 'danger')
             return render_template('register.html')
         
+        
         if len(username) < 3:
-            flash('Имя пользователя должно содержать минимум 3 символа', 'danger')
+            flash('Имя должно содержать минимум 3 символа', 'danger')
             return render_template('register.html')
         
+        if len(username) > 50:
+            flash('Имя не должно превышать 50 символов', 'danger')
+            return render_template('register.html')
+        
+        if not re.match(r'^[a-zA-Zа-яА-ЯёЁ\s]+$', username):
+            flash('Имя может содержать только буквы', 'danger')
+            return render_template('register.html')
+        
+        username_clean = ' '.join(username.split())
+        
+        name_parts = username_clean.split()
+        
+        if len(name_parts) > 2:
+            flash('Введите только имя или имя и фамилию', 'danger')
+            return render_template('register.html')
+        
+        for part in name_parts:
+            if len(part) < 2:
+                flash('Каждое слово должно содержать минимум 2 буквы', 'danger')
+                return render_template('register.html')
+        
+        for part in name_parts:
+            if not part[0].isupper():
+                flash('Имя должно начинаться с заглавной буквы', 'danger')
+                return render_template('register.html')
+                
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_pattern, email):
+            flash('Введите корректный email адрес', 'danger')
+            return render_template('register.html')
+                
         if len(password) < 6:
             flash('Пароль должен содержать минимум 6 символов', 'danger')
+            return render_template('register.html')
+        
+        if len(password) > 50:
+            flash('Пароль не должен превышать 50 символов', 'danger')
+            return render_template('register.html')
+        
+        if not re.search(r'[a-zA-Zа-яА-Я]', password):
+            flash('Пароль должен содержать хотя бы одну букву', 'danger')
+            return render_template('register.html')
+        
+        if not re.search(r'[0-9]', password):
+            flash('Пароль должен содержать хотя бы одну цифру', 'danger')
+            return render_template('register.html')
+        
+        if ' ' in password:
+            flash('Пароль не должен содержать пробелы', 'danger')
             return render_template('register.html')
         
         if password != password_confirm:
             flash('Пароли не совпадают', 'danger')
             return render_template('register.html')
+        
+        username = username_clean
         
         if get_user_by_username(username):
             flash('Пользователь с таким именем уже существует', 'danger')
