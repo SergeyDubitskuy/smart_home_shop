@@ -61,27 +61,6 @@
     </div>
     {% endif %}
     
-    {% if related_products %}
-    <div class="related-section">
-        <h2>Похожие товары</h2>
-        <div class="products-grid">
-            {% for product in related_products %}
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
-                </div>
-                <div class="product-info">
-                    <h3>{{ product.name }}</h3>
-                    <div class="product-footer">
-                        <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
-                        <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn">Подробнее</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
     
     <div class="reviews-section">
         <h2>Отзывы ({{ reviews|length }})</h2>
