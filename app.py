@@ -450,8 +450,8 @@ def register():
         allowed_domains = ['.ru', '.com', '.info', '.net', '.org', '.by', '.su']
 
         if not any(email_lower.endswith(domain) for domain in allowed_domains):
-        flash('Email должен заканчиваться на .ru, .com, .info, .net, .org, .by или .su', 'danger')
-        return render_template('register.html')     
+            flash('Email должен заканчиваться на .ru, .com, .info, .net, .org, .by или .su', 'danger')
+            return render_template('register.html')     
                 
         if len(password) < 6:
             flash('Пароль должен содержать минимум 6 символов', 'danger')
